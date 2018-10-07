@@ -9,14 +9,31 @@
 
 TBitField::TBitField(int len)
 {	
+	BitLen = len;
+	pMem = new TELEM[BitLen];
+	if (BitLen != NULL)
+		for (int i = 0; i < BitLen; i++)
+		{
+			pMem[i] = 0;
+		}
+	MemLen = 0;
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
+	BitLen = bf.BitLen;
+	pMem = new TELEM[BitLen];
+	if (BitLen != NULL)
+		for (int i = 0; i < BitLen; i++)
+		{
+			pMem[i] = bf.pMem[i];
+		}
 }
 
 TBitField::~TBitField()
 {
+	if (pMem != NULL)
+		delete [] pMem;	
 }
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
