@@ -1,6 +1,5 @@
-#include "tset.h"
-
 #include <gtest.h>
+#include "tset.h"
 
 TEST(TSet, can_get_max_power_set)
 {
@@ -63,7 +62,6 @@ TEST(TSet, compare_two_equal_sets)
 {
   const int size = 4;
   TSet set1(size), set2(size);
-  // set1 = set2 = {1, 3}
   set1.InsElem(1);
   set1.InsElem(3);
   set2.InsElem(1);
@@ -75,11 +73,9 @@ TEST(TSet, compare_two_equal_sets)
 TEST(TSet, compare_two_non_equal_sets)
 {
   const int size = 4;
-  TSet set1(size), set2(size);
-  // set1 = {1, 3}
+  TSet set1(size), set2(size);  
   set1.InsElem(1);
-  set1.InsElem(3);
-  // set2 = {1, 2}
+  set1.InsElem(3);  
   set2.InsElem(1);
   set2.InsElem(2);
 
@@ -89,8 +85,7 @@ TEST(TSet, compare_two_non_equal_sets)
 TEST(TSet, can_assign_set_of_equal_size)
 {
   const int size = 4;
-  TSet set1(size), set2(size);
-  // set1 = {1, 3}
+  TSet set1(size), set2(size);  
   set1.InsElem(1);
   set1.InsElem(3);
   set2 = set1;
@@ -102,7 +97,6 @@ TEST(TSet, can_assign_set_of_greater_size)
 {
   const int size1 = 4, size2 = 6;
   TSet set1(size1), set2(size2);
-  // set1 = {1, 3}
   set1.InsElem(1);
   set1.InsElem(3);
   set2 = set1;
@@ -114,7 +108,6 @@ TEST(TSet, can_assign_set_of_less_size)
 {
   const int size1 = 6, size2 = 4;
   TSet set1(size1), set2(size2);
-  // set1 = {1, 3, 5}
   set1.InsElem(1);
   set1.InsElem(3);
   set1.InsElem(5);
@@ -162,11 +155,9 @@ TEST(TSet, check_size_of_the_combination_of_two_sets_of_equal_size)
 {
   const int size = 5;
   TSet set1(size), set2(size), set3(size);
-  // set1 = {1, 2, 4}
   set1.InsElem(1);
   set1.InsElem(2);
   set1.InsElem(4);
-  // set2 = {0, 1, 2}
   set2.InsElem(0);
   set2.InsElem(1);
   set2.InsElem(2);
@@ -179,16 +170,13 @@ TEST(TSet, can_combine_two_sets_of_equal_size)
 {
   const int size = 5;
   TSet set1(size), set2(size), set3(size), expSet(size);
-  // set1 = {1, 2, 4}
   set1.InsElem(1);
   set1.InsElem(2);
   set1.InsElem(4);
-  // set2 = {0, 1, 2}
   set2.InsElem(0);
   set2.InsElem(1);
   set2.InsElem(2);
   set3 = set1 + set2;
-  // expSet = {0, 1, 2, 4}
   expSet.InsElem(0);
   expSet.InsElem(1);
   expSet.InsElem(2);
@@ -201,11 +189,9 @@ TEST(TSet, check_size_changes_of_the_combination_of_two_sets_of_non_equal_size)
 {
   const int size1 = 5, size2 = 7;
   TSet set1(size1), set2(size2), set3(size1);
-  // set1 = {1, 2, 4}
   set1.InsElem(1);
   set1.InsElem(2);
   set1.InsElem(4);
-  // set2 = {0, 1, 2}
   set2.InsElem(0);
   set2.InsElem(1);
   set2.InsElem(2);
@@ -294,4 +280,68 @@ TEST(TSet, check_negation_operator)
   expSet.InsElem(2);
 
   EXPECT_EQ(expSet, set1);
+}
+
+TEST(TSet, true_equivalence_set)
+{
+  const int size = 5;
+  TSet set1(size), set2(size);
+
+  set1.InsElem(1);
+  set1.InsElem(2);
+  set1.InsElem(4);
+
+  set2.InsElem(1);
+  set2.InsElem(2);
+  set2.InsElem(4);
+
+  EXPECT_EQ(set1 == set2, true);
+}
+
+TEST(TSet, false_equivalence_set)
+{
+  const int size = 5;
+  TSet set1(size), set2(size);
+
+  set1.InsElem(1);
+  set1.InsElem(2);
+  set1.InsElem(4);
+
+  set2.InsElem(1);
+  set2.InsElem(2);
+  set2.InsElem(3);
+
+  EXPECT_EQ(set1 == set2, false);
+}
+
+TEST(TSet, true_anti_equivalence_set)
+{
+  const int size = 5;
+  TSet set1(size), set2(size);
+
+  set1.InsElem(1);
+  set1.InsElem(2);
+  set1.InsElem(4);
+
+  set2.InsElem(1);
+  set2.InsElem(2);
+  set2.InsElem(3);
+
+  EXPECT_EQ(set1 != set2, true);
+}
+
+TEST(TSet, false_anti_equivalence_set)
+{
+  const int size = 5;
+  TSet set1(size), set2(size);
+
+  set1.InsElem(1);
+  set1.InsElem(2);
+  set1.InsElem(4);
+
+  set2.InsElem(1);
+  set2.InsElem(2);
+  set2.InsElem(4);
+
+  EXPECT_EQ(set1 != set2, false);
 }
