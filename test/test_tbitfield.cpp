@@ -1,12 +1,6 @@
+#include <gtest.h>
 #include "tbitfield.h"
 
-#include <gtest.h>
-
-TEST(MathTest, DISABLED_two_plus_two_equals_four)
-{
-	int x = 2 + 2;
-	EXPECT_EQ(4, x);
-}
 
 TEST(TBitField, can_create_bitfield_with_positive_length)
 {
@@ -250,7 +244,7 @@ TEST(TBitField, can_invert_large_bitfield)
   bf.SetBit(35);
   negBf = ~bf;
 
-  for(int i = 0; i < size; i++)
+  for (int i = 0; i < size; i++)
     expNegBf.SetBit(i);
   expNegBf.ClrBit(35);
 
@@ -294,7 +288,7 @@ TEST(TBitField, can_invert_many_random_bits_bitfield)
 
   negBf = ~bf;
 
-  for(int i = 0; i < size; i++)
+  for (int i = 0; i < size; i++)
     expNegBf.SetBit(i);
   for (unsigned int i = 0; i < bits.size(); i++)
     expNegBf.ClrBit(bits[i]);
@@ -314,4 +308,48 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
   bf2.SetBit(2);
 
   EXPECT_NE(bf1, bf2);
+}
+
+TEST(TBitField, true_equivalence_bitfields)
+{
+  const int size = 4;
+  TBitField firstBf(size), secondBf(size);
+
+  firstBf.SetBit(0);
+  secondBf.SetBit(0);
+
+  EXPECT_EQ(secondBf == firstBf, true);
+}
+
+TEST(TBitField, false_equivalence_bitfields)
+{
+  const int size = 4;
+  TBitField firstBf(size), secondBf(size);
+
+  firstBf.SetBit(0);
+  secondBf.SetBit(3);
+
+  EXPECT_EQ(secondBf == firstBf, false);
+}
+
+TEST(TBitField, true_anti_equivalence_bitfields)
+{
+  const int size = 4;
+  TBitField firstBf(size), secondBf(size);
+
+  firstBf.SetBit(0);
+  secondBf.SetBit(0);
+
+  EXPECT_EQ(secondBf != firstBf, false);
+}
+
+TEST(TBitField, false_anti_equivalence_bitfields)
+{
+  const int size = 4;
+  TBitField firstBf(size), secondBf(size);
+
+  firstBf.SetBit(0);
+  secondBf.SetBit(3);
+
+  EXPECT_EQ(secondBf != firstBf, true);
 }
